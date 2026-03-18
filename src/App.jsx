@@ -149,7 +149,7 @@ const translations = {
 // --- Composants de décoration & LOGO INTERNE ---
 
 const Logo = ({ className = "w-10 h-10" }) => (
-  <img src="/logo.svg" alt="Itinerarly Logo" className={className} />
+  <img src="/logo.png" alt="Itinerarly Logo" className={className} />
 );
 
 const GrainOverlay = () => (
