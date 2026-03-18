@@ -151,43 +151,54 @@ const translations = {
 const Logo = ({ className = "w-10 h-10" }) => (
   <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <filter id="logo-shadow" x="-20%" y="-20%" width="140%" height="140%">
-        <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#000000" floodOpacity="0.15" />
-      </filter>
-      <radialGradient id="bg-grad" cx="50%" cy="50%" r="50%" fx="35%" fy="30%">
-        <stop offset="0%" stopColor="#F8F6F2" />
-        <stop offset="100%" stopColor="#E5DFD6" />
+      <radialGradient id="bg-grad" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
+        <stop offset="0%" stopColor="#FAF8F5" />
+        <stop offset="100%" stopColor="#EBE5DA" />
       </radialGradient>
+      <filter id="logo-shadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#000000" floodOpacity="0.10"/>
+      </filter>
     </defs>
 
-    {/* Bezel / Background */}
-    <circle cx="50" cy="50" r="48" fill="#EAE5DF" stroke="#F1EDE7" strokeWidth="2"/>
-    <circle cx="50" cy="50" r="43.5" fill="none" stroke="#D1CCC5" strokeWidth="1.5"/>
-    <circle cx="50" cy="50" r="42.5" fill="url(#bg-grad)" />
+    {/* 1. Bezel */}
+    <circle cx="50" cy="50" r="48" fill="#F0EBE1" />
+    <circle cx="50" cy="50" r="47" stroke="#FAF8F5" strokeWidth="1.5" />
+    <circle cx="50" cy="50" r="44" stroke="#DFD8CE" strokeWidth="1" />
+    
+    {/* 2. Main Background */}
+    <circle cx="50" cy="50" r="43.5" fill="url(#bg-grad)" />
 
-    {/* Shadow Group for Pin & Path */}
     <g filter="url(#logo-shadow)">
-      {/* Shadow Dots (Secondary Trail) */}
-      <circle cx="41" cy="64" r="2.2" fill="#AA9E95" opacity="0.8" />
-      <circle cx="49" cy="60" r="2.0" fill="#AA9E95" opacity="0.8" />
-      <circle cx="57" cy="62" r="2.2" fill="#AA9E95" opacity="0.8" />
-      <circle cx="64" cy="66" r="2.4" fill="#AA9E95" opacity="0.8" />
+      {/* 3. Brown Background Dots */}
+      <circle cx="40.5" cy="62" r="1.8" fill="#A49A8F" />
+      <circle cx="53.5" cy="60" r="1.8" fill="#A49A8F" />
+      <circle cx="61.5" cy="63" r="1.8" fill="#A49A8F" />
 
-      {/* Main Trail Dots */}
-      <circle cx="34" cy="62" r="2.2" fill="#3A3840" />
-      <circle cx="41" cy="58" r="2.2" fill="#3A3840" />
-      <circle cx="49" cy="56" r="2.2" fill="#3A3840" />
-      <circle cx="57" cy="56" r="2.2" fill="#3A3840" />
-      
-      {/* Start Point */}
-      <circle cx="28" cy="68" r="4.5" fill="#3A3840" stroke="white" strokeWidth="2.5" />
-      
-      {/* Location Pin */}
-      <g transform="translate(66, 56) scale(1) translate(-14, -38)">
-        <path d="M14 0C6.27 0 0 6.27 0 14c0 10.5 14 24 14 24s14-13.5 14-24c0-7.73-6.27-14-14-14z" fill="#3A3840"/>
-        {/* Subtle highlight bezel on the right */}
-        <path d="M14 2 C 20.63 2 26 7.37 26 14 C 26 21 21 28 14 36" fill="none" stroke="#5E5C64" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
-        <circle cx="14" cy="14" r="5.5" fill="white"/>
+      {/* 4. Main Dark Path Dots */}
+      <circle cx="33.5" cy="60.5" r="2.2" fill="#36333B" />
+      <circle cx="40.5" cy="56.5" r="2.2" fill="#36333B" />
+      <circle cx="48.5" cy="55.5" r="2.2" fill="#36333B" />
+      <circle cx="57.0" cy="56.5" r="2.2" fill="#36333B" />
+      <circle cx="65.0" cy="56.5" r="2.2" fill="#36333B" /> {/* Pin base */}
+
+      {/* 5. Start Point */}
+      <circle cx="27" cy="67" r="5.5" fill="#EAE5DC" /> {/* Outer faint ring */}
+      <circle cx="27" cy="67" r="4.2" fill="#FFFFFF" /> {/* White ring */}
+      <circle cx="27" cy="67" r="2.8" fill="#36333B" /> {/* Dark center */}
+
+      {/* 6. Location Pin */}
+      <g transform="translate(65, 56.5) translate(-14, -38)">
+        {/* Main Pin Body */}
+        <path d="M14 0C6.27 0 0 6.27 0 14c0 10.5 14 24 14 24s14-13.5 14-24c0-7.73-6.27-14-14-14z" fill="#36333B"/>
+        
+        {/* Right Side Bezel/Highlight Overlay */}
+        <path d="M14 0 C 21.73 0 28 6.27 28 14 C 28 24.5 14 38 14 38 C 14 38 25 24.5 25 14 C 25 7.9 20.1 3 14 3 Z" fill="#4B4751" opacity="0.6" />
+        
+        {/* Subtle edge stroke */}
+        <path d="M14 2C20.6 2 26 7.4 26 14c0 7-5 14-12 22" fill="none" stroke="#5E5C64" strokeWidth="0.8" opacity="0.5"/>
+
+        {/* White Inner Circle */}
+        <circle cx="14" cy="13.5" r="5" fill="#FFFFFF"/>
       </g>
     </g>
   </svg>
