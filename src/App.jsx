@@ -64,7 +64,7 @@ const translations = {
     stats: {
       title: "L'impact Itinerarly",
       items: [
-        { value: "18 000+", label: "Destinations", sublabel: "curatées manuellement" },
+        { value: "18 000+", label: "Destinations", sublabel: "sélectionnées avec soin" },
         { value: "80+", label: "Villes", sublabel: "totalement explorables" },
         { value: "∞", label: "Trajets", sublabel: "optimisés dynamiquement" },
         { value: "24/7", label: "Aventures", sublabel: "disponibles instantanément" }
@@ -126,7 +126,7 @@ const translations = {
     stats: {
       title: "The Itinerarly Impact",
       items: [
-        { value: "18 000+", label: "Destinations", sublabel: "manually curated" },
+        { value: "18 000+", label: "Destinations", sublabel: "carefully selected" },
         { value: "80+", label: "Cities", sublabel: "fully explorable" },
         { value: "∞", label: "Routes", sublabel: "dynamically optimized" },
         { value: "24/7", label: "Adventures", sublabel: "instantly available" }
