@@ -7,6 +7,7 @@ import {
   X,
   Quote
 } from 'lucide-react';
+import { privacyPolicyFR, privacyPolicyEN, termsOfUseFR, termsOfUseEN } from './legalTexts';
 
 
 
@@ -72,9 +73,9 @@ const translations = {
     },
     legal: {
       privacyTitle: "Politique de confidentialité",
-      privacyContent: `Dernière mise à jour : Mars 2026\n\nChez Itinerarly, la protection de vos données personnelles est notre priorité.`,
+      privacyContent: privacyPolicyFR,
       termsTitle: "Conditions Générales d'Utilisation",
-      termsContent: `Dernière mise à jour : Mars 2026\n\nEn téléchargeant l'application Itinerarly, ces termes s'appliqueront automatiquement.`
+      termsContent: termsOfUseFR
     }
   },
   en: {
@@ -133,9 +134,9 @@ const translations = {
     },
     legal: {
       privacyTitle: "Privacy Policy",
-      privacyContent: `Last updated: March 2026`,
+      privacyContent: privacyPolicyEN,
       termsTitle: "Terms of Service",
-      termsContent: `Last updated: March 2026`
+      termsContent: termsOfUseEN
     }
   }
 };
