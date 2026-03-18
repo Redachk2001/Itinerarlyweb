@@ -273,9 +273,9 @@ const InteractiveFeatures = ({ t }) => {
   const colorMap = ['ocean', 'turquoise', 'coral', 'violet'];
   const activeColor = colorMap[activeIdx];
   return (
-    <section id="features" className="py-32 md:py-48 px-6 relative z-10 bg-white/30 backdrop-blur-md border-y border-white/40">
+    <section id="features" className="py-24 px-6 relative z-10 bg-white/30 backdrop-blur-md border-y border-white/40">
       <LandmarkDecor />
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+      <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row items-center gap-16">
         <div className="w-full lg:w-1/2 flex flex-col gap-3">
           <h2 className="text-4xl lg:text-5xl font-black text-brand-text mb-2 uppercase tracking-tighter leading-tight">{t.features.title}</h2>
           <p className="text-xl text-gray-500 mb-8 font-medium">{t.features.subtitle}</p>
@@ -311,9 +311,9 @@ const Personas = ({ t }) => {
   const imageMap = ["https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200", "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=200", "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200"];
   const colorMap = ["violet", "ocean", "turquoise"];
   return (
-    <section className="py-40 md:py-56 px-6 relative z-10 overflow-hidden">
+    <section className="py-32 px-6 relative z-10 overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15vw] font-black text-gray-100 opacity-20 select-none pointer-events-none uppercase">EXPLORERS</div>
-      <div className="max-w-5xl mx-auto text-center relative z-10">
+      <div className="max-w-7xl mx-auto text-center relative z-10">
         <h2 className="text-sm font-bold tracking-[0.3em] text-gray-400 uppercase mb-4 opacity-60">{t.personas.title}</h2>
         <div className="relative min-h-[300px] flex flex-col items-center justify-center mb-16">
           <Quote className="absolute -top-10 left-1/2 -translate-x-1/2 w-48 h-48 text-brand-gradientStart opacity-[0.03] z-0" />
@@ -338,8 +338,8 @@ const Personas = ({ t }) => {
 const FluidStats = ({ t }) => {
   const textColorMap = ["text-coral", "text-turquoise", "text-ocean", "text-violet"];
   return (
-    <section id="stats" className="py-32 md:py-48 px-6 bg-white/60 backdrop-blur-xl border-y border-white relative z-10">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-16">
+    <section id="stats" className="py-24 px-6 bg-white/60 backdrop-blur-xl border-y border-white relative z-10">
+      <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-16">
         <div className="lg:w-1/3 text-center lg:text-left">
           <h2 className="text-5xl font-black mb-4 text-brand-text uppercase tracking-tighter leading-[0.9]">{t.stats.title}</h2>
           <div className="w-20 h-2 bg-gradient-to-r from-brand-gradientStart to-brand-gradientEnd mx-auto lg:mx-0 rounded-full"></div>
@@ -383,7 +383,7 @@ const App = () => {
       
       {/* Navbar */}
       <nav className="fixed w-full z-50 top-0 px-6 py-4">
-        <div className="max-w-7xl mx-auto bg-white/70 backdrop-blur-md border border-white/50 rounded-full px-6 py-3 flex items-center justify-between shadow-sm">
+        <div className="max-w-[1400px] mx-auto bg-white/70 backdrop-blur-md border border-white/50 rounded-full px-6 py-3 flex items-center justify-between shadow-sm">
           <div className="flex items-center gap-3">
             <Logo className="w-10 h-10 drop-shadow-sm" />
             <span className="text-xl font-bold tracking-widest text-brand-text uppercase">Itinerarly</span>
@@ -407,10 +407,10 @@ const App = () => {
 
       <main>
         {/* Hero Section */}
-        <section className="relative min-h-[110vh] flex items-center justify-center pt-32 pb-24 px-6 overflow-hidden">
+        <section className="relative min-h-screen flex items-center justify-center pt-24 pb-12 px-6 overflow-hidden">
           <LandmarkDecor />
           <AnimatedPath />
-          <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="relative z-10 max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-center">
             <div className="text-left relative">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 backdrop-blur-sm border border-white/80 shadow-sm mb-6 animate-float">
                 <Sparkles size={16} className="text-brand-gradientStart" />
@@ -435,7 +435,7 @@ const App = () => {
               <div className="absolute bottom-4 md:bottom-10 left-0 md:-left-4 w-12 h-12 md:w-16 md:h-16 bg-white/80 backdrop-blur-xl border border-white rounded-full animate-float flex items-center justify-center text-turquoise shadow-lg md:shadow-2xl z-0"><Headphones className="w-5 h-5 md:w-8 md:h-8" /></div>
               <div className="absolute top-[10%] md:top-[20%] left-[2%] md:left-[5%] w-12 h-12 md:w-16 md:h-16 bg-white/90 backdrop-blur-xl border border-white rounded-xl md:rounded-2xl animate-float flex items-center justify-center text-ocean shadow-lg md:shadow-2xl z-20"><Map className="w-6 h-6 md:w-8 md:h-8" /></div>
               <div className="absolute bottom-[5%] md:bottom-[15%] right-[2%] md:right-[5%] w-12 h-12 md:w-16 md:h-16 bg-white/90 backdrop-blur-xl border border-white rounded-xl md:rounded-2xl animate-float-delayed flex items-center justify-center text-violet shadow-lg md:shadow-2xl z-20"><Dices className="w-6 h-6 md:w-8 md:h-8" /></div>
-              <div className="animate-float relative flex justify-center w-full z-10 scale-[0.85] sm:scale-95 lg:scale-100 origin-center" style={{ perspective: '2000px' }}>
+              <div className="animate-float relative flex justify-center w-full z-10 scale-[0.85] sm:scale-95 lg:scale-110 xl:scale-125 origin-center" style={{ perspective: '2000px' }}>
                 <div style={{ transform: 'rotateY(-15deg) rotateX(10deg) rotateZ(-3deg)', transformStyle: 'preserve-3d' }}>
                   <IPhone16 t={t} />
                 </div>
@@ -450,8 +450,8 @@ const App = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-beige pt-48 pb-24 px-6 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
+      <footer className="bg-beige pt-32 pb-16 px-6 relative overflow-hidden">
+        <div className="max-w-[1400px] mx-auto flex flex-col items-center text-center relative z-10">
           <div className="flex items-center gap-4 mb-12">
             <Logo className="w-12 h-12" />
             <span className="text-3xl font-black tracking-[0.3em] text-brand-text uppercase font-sans">Itinerarly</span>
