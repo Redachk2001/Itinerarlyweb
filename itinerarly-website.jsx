@@ -1,0 +1,522 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  Map, 
+  Headphones, 
+  Sparkles, 
+  Dices, 
+  X,
+  Quote
+} from 'lucide-react';
+
+// --- Configuration Tailwind ---
+const tailwindConfig = `
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'sans-serif'],
+        },
+        colors: {
+          beige: {
+            DEFAULT: '#FCF8F0',
+            dark: '#F0EAD6'
+          },
+          ocean: '#3366CC',
+          turquoise: '#1A99B3',
+          coral: '#FF664D',
+          violet: '#4D3399',
+          brand: {
+            text: '#1A1A1A',
+            gradientStart: '#B86F52',
+            gradientEnd: '#E6A172'
+          }
+        },
+        animation: {
+          'float': 'float 6s ease-in-out infinite',
+          'float-delayed': 'float 6s ease-in-out 3s infinite',
+          'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          'dash': 'dash 20s linear infinite',
+          'highlight': 'highlight 2s ease-out forwards',
+        },
+        keyframes: {
+          float: {
+            '0%, 100%': { transform: 'translateY(0)' },
+            '50%': { transform: 'translateY(-20px)' },
+          },
+          dash: {
+            to: { strokeDashoffset: -1000 }
+          },
+          highlight: {
+            '0%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(184, 111, 82, 0)' },
+            '30%': { transform: 'scale(1.05)', boxShadow: '0 0 40px 10px rgba(184, 111, 82, 0.4)' },
+            '100%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(184, 111, 82, 0)' }
+          }
+        }
+      }
+    }
+  }
+`;
+
+// --- Système de Traductions System ---
+const translations = {
+  fr: {
+    nav: { features: "Fonctionnalités", stats: "Statistiques", getApp: "Obtenir l'App" },
+    hero: {
+      badge: "L'IA au service de l'exploration",
+      title1: "Chaque trajet",
+      title2: "devient une ",
+      title3: "aventure",
+      desc: "Planifiez vos trajets, explorez des villes avec des audioguides, trouvez des activités à proximité et laissez-vous surprendre — le tout dans une seule application.",
+      appStore: "Télécharger dans l'App Store",
+      googlePlay: "Disponible sur Google Play"
+    },
+    app: {
+      greeting: "Salut 👋",
+      question: "Que veux-tu faire aujourd'hui ?",
+      plan: "Planifier",
+      planDesc: "Crée ton itinéraire",
+      tours: "Tours guidés",
+      toursDesc: "Explore avec un guide",
+      suggestions: "Suggestions",
+      sugDesc: "Trouve une activité",
+      adventure: "Aventure",
+      advDesc: "Laisse-toi surprendre",
+      footer: "Chaque trajet devient une aventure"
+    },
+    features: {
+      title: "Les Superpouvoirs de l'App",
+      subtitle: "Un moteur d'exploration intelligent qui s'adapte à chaque instant de votre journée.",
+      modes: [
+        { id: 'planner', title: 'Le Planificateur', userView: '"Générez un itinéraire sur mesure en quelques secondes, parfaitement adapté à vos envies."', capabilities: 'Itinéraires optimisés (marche, voiture, transports). Cartes intégrées.' },
+        { id: 'tours', title: 'Visites Guidées', userView: '"Plongez dans l\'histoire locale avec des audioguides immersifs qui s\'adaptent à votre rythme."', capabilities: 'Plus de 80 villes. Guides audio immersifs FR/EN.' },
+        { id: 'suggestions', title: 'Suggestions Intelligentes', userView: '"Trouvez instantanément l\'activité idéale ou le restaurant parfait, peu importe où vous êtes."', capabilities: 'Filtres croisés intelligents. Sélectionnez le temps disponible.' },
+        { id: 'adventure', title: 'Aventure', userView: '"Laissez l\'application choisir pour vous et vivez des découvertes spontanées et inattendues."', capabilities: 'Génération instantanée d\'une aventure basée sur votre position.' }
+      ],
+      capLabel: "Technologie :"
+    },
+    personas: {
+      title: "Des milliers de voyageurs",
+      subtitle: "Découvrez comment Itinerarly révolutionne l'exploration à travers le monde.",
+      list: [
+        { name: "Sophie", role: "L'Aventurière Spontanée", quote: "Je déteste tout planifier. Avec le Mode Aventure, Itinerarly m'a fait découvrir un café historique caché.", tag: "Utilise le Mode Aventure" },
+        { name: "Marc & Léa", role: "Les Planificateurs", quote: "Gérer un voyage à deux n'a jamais été aussi simple. L'IA a optimisé notre trajet pour tout voir.", tag: "Utilisent Le Planificateur" },
+        { name: "Thomas", role: "Le Passionné d'Histoire", quote: "Les guides audio interactifs sont incroyables. J'ai eu l'impression de me promener avec un historien.", tag: "Utilise les Visites Guidées" }
+      ]
+    },
+    stats: {
+      title: "L'impact Itinerarly",
+      items: [
+        { value: "18 000+", label: "Destinations", sublabel: "curatées manuellement" },
+        { value: "80+", label: "Villes", sublabel: "totalement explorables" },
+        { value: "∞", label: "Trajets", sublabel: "optimisés dynamiquement" },
+        { value: "24/7", label: "Aventures", sublabel: "disponibles instantanément" }
+      ]
+    },
+    footer: {
+      privacy: "Politique de confidentialité", terms: "Conditions d'utilisation",
+      contact: "Contactez-nous par email : itinerarly@gmail.com",
+      made: "Fait avec", in: "en France", rights: "Itinerarly. Tous droits réservés."
+    },
+    legal: {
+      privacyTitle: "Politique de confidentialité",
+      privacyContent: `Dernière mise à jour : Mars 2026\n\nChez Itinerarly, la protection de vos données personnelles est notre priorité.`,
+      termsTitle: "Conditions Générales d'Utilisation",
+      termsContent: `Dernière mise à jour : Mars 2026\n\nEn téléchargeant l'application Itinerarly, ces termes s'appliqueront automatiquement.`
+    }
+  },
+  en: {
+    nav: { features: "Features", stats: "Statistics", getApp: "Get the App" },
+    hero: {
+      badge: "AI powered exploration",
+      title1: "Every journey",
+      title2: "becomes an ",
+      title3: "adventure",
+      desc: "Plan your trips, explore cities with audio guides, find nearby activities and let yourself be surprised — all in one single app.",
+      appStore: "Download on the App Store",
+      googlePlay: "Get it on Google Play"
+    },
+    app: {
+      greeting: "Hi 👋",
+      question: "What do you want to do today?",
+      plan: "Plan", planDesc: "Create your itinerary",
+      tours: "Guided Tours", toursDesc: "Explore with a guide",
+      suggestions: "Suggestions", sugDesc: "Find an activity",
+      adventure: "Adventure", advDesc: "Let yourself be surprised",
+      footer: "Every journey becomes an adventure"
+    },
+    features: {
+      title: "The App's Superpowers",
+      subtitle: "An intelligent exploration engine that adapts to every moment of your day.",
+      modes: [
+        { id: 'planner', title: 'The Planner', userView: '"Generate a custom itinerary in seconds, perfectly tailored to your desires."', capabilities: 'Optimized routes. Integrated maps.' },
+        { id: 'tours', title: 'Guided Tours', userView: '"Dive into local history with immersive audio guides that adapt to your pace."', capabilities: 'Over 80 cities worldwide. Audio guides in FR/EN.' },
+        { id: 'suggestions', title: 'Smart Suggestions', userView: '"Instantly find the ideal activity or the perfect restaurant, no matter where you are."', capabilities: 'Intelligent filters. Instant results.' },
+        { id: 'adventure', title: 'Adventure Mode', userView: '"Let the app decide for you and experience spontaneous, unexpected adventures."', capabilities: 'One click for a random adventure.' }
+      ],
+      capLabel: "Technology:"
+    },
+    personas: {
+      title: "Thousands of travelers",
+      subtitle: "Discover how Itinerarly is revolutionizing exploration around the world.",
+      list: [
+        { name: "Sophie", role: "The Spontaneous Adventurer", quote: "I hate planning everything. With Adventure Mode, Itinerarly helped me discover a hidden gem.", tag: "Uses Adventure Mode" },
+        { name: "Marc & Léa", role: "The Planners", quote: "Managing a trip for two has never been easier. The AI optimized our route.", tag: "Uses The Planner" },
+        { name: "Thomas", role: "The History Buff", quote: "The interactive audio guides are incredible. I felt like I was with a historian.", tag: "Uses Guided Tours" }
+      ]
+    },
+    stats: {
+      title: "The Itinerarly Impact",
+      items: [
+        { value: "18 000+", label: "Destinations", sublabel: "manually curated" },
+        { value: "80+", label: "Cities", sublabel: "fully explorable" },
+        { value: "∞", label: "Routes", sublabel: "dynamically optimized" },
+        { value: "24/7", label: "Adventures", sublabel: "instantly available" }
+      ]
+    },
+    footer: {
+      privacy: "Privacy Policy", terms: "Terms of Service",
+      contact: "Contact us via email: itinerarly@gmail.com",
+      made: "Made with", in: "in France", rights: "Itinerarly. All rights reserved."
+    },
+    legal: {
+      privacyTitle: "Privacy Policy",
+      privacyContent: `Last updated: March 2026`,
+      termsTitle: "Terms of Service",
+      termsContent: `Last updated: March 2026`
+    }
+  }
+};
+
+// --- Composants de décoration & LOGO INTERNE ---
+
+const Logo = ({ className = "w-10 h-10" }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Background Circle */}
+    <circle cx="50" cy="50" r="48" fill="#F5F2EB" stroke="#EAE5DB" strokeWidth="1"/>
+    <circle cx="50" cy="50" r="44" fill="#FDFCF9" opacity="0.5"/>
+    
+    {/* Dashed Route Path */}
+    <path 
+      d="M 32 68 C 35 55, 45 50, 55 52" 
+      stroke="#434049" 
+      strokeWidth="5" 
+      strokeLinecap="round" 
+      strokeDasharray="0.1 10"
+    />
+    
+    {/* Start Point */}
+    <circle cx="32" cy="68" r="5" fill="#434049" stroke="#F5F2EB" strokeWidth="2"/>
+    
+    {/* Location Pin */}
+    <g transform="translate(52, 28) scale(1.1)">
+      <path 
+        d="M10 0C4.48 0 0 4.48 0 10C0 17.5 10 28 10 28C10 28 20 17.5 20 10C20 4.48 15.52 0 10 0Z" 
+        fill="#434049"
+      />
+      <circle cx="10" cy="10" r="4" fill="white"/>
+    </g>
+  </svg>
+);
+
+const GrainOverlay = () => (
+  <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03]" style={{ backgroundImage: `url("https://grainy-gradients.vercel.app/noise.svg")` }}></div>
+);
+
+const LandmarkDecor = () => (
+  <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+    <div className="absolute top-[15%] left-[5%] opacity-[0.07] animate-float text-6xl">🗼</div>
+    <div className="absolute top-[40%] right-[3%] opacity-[0.07] animate-float-delayed text-7xl">🗽</div>
+    <div className="absolute bottom-[20%] left-[2%] opacity-[0.07] animate-float text-8xl rotate-12">🗿</div>
+    <div className="absolute bottom-[40%] right-[8%] opacity-[0.05] animate-float-delayed text-5xl">⛩️</div>
+    <div className="absolute top-[30%] left-4 text-[10px] font-mono tracking-widest text-gray-400 rotate-90 origin-left uppercase font-bold">LAT 48.8566 | LON 2.3522 // PARIS.FR</div>
+    <div className="absolute bottom-[30%] right-4 text-[10px] font-mono tracking-widest text-gray-400 -rotate-90 origin-right uppercase font-bold">LAT 35.6762 | LON 139.6503 // TOKYO.JP</div>
+  </div>
+);
+
+const AnimatedPath = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 opacity-20">
+    <svg className="absolute w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 1000">
+      <path d="M -100 100 C 200 50, 300 300, 500 200 S 800 400, 1100 300" fill="none" stroke="#1A1A1A" strokeWidth="1" strokeDasharray="5 10" className="animate-dash opacity-30"/>
+      <path d="M -100 600 C 200 700, 400 400, 700 600 S 900 800, 1100 700" fill="none" stroke="#B86F52" strokeWidth="1" strokeDasharray="5 10" className="animate-dash opacity-30"/>
+    </svg>
+  </div>
+);
+
+const LegalModal = ({ title, content, onClose }) => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = 'auto'; };
+  }, []);
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/50 backdrop-blur-sm" onClick={onClose}>
+      <div className="bg-beige w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-[2rem] p-8 md:p-12 shadow-2xl relative border border-white" onClick={e => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-6 right-6 p-2 bg-white/80 backdrop-blur rounded-full shadow-sm hover:bg-white transition-colors"><X size={24} className="text-gray-600" /></button>
+        <h2 className="text-3xl lg:text-4xl font-extrabold text-brand-text mb-8 tracking-tight">{title}</h2>
+        <div className="text-gray-700 whitespace-pre-line leading-relaxed font-medium">{content}</div>
+      </div>
+    </div>
+  );
+};
+
+const IPhone16 = ({ t }) => (
+  <div className="relative w-[300px] lg:w-[330px] h-[620px] lg:h-[680px] mx-auto z-10" style={{ transformStyle: 'preserve-3d' }}>
+    <div className="absolute inset-0 rounded-[50px] bg-[#2a2b2e] shadow-[-30px_30px_50px_rgba(0,0,0,0.6)]" style={{ transform: 'translateZ(-15px) translateX(8px) translateY(5px)', boxShadow: 'inset -5px 0px 15px rgba(255,255,255,0.1), -30px 30px 50px rgba(0,0,0,0.6)' }}></div>
+    <div className="absolute inset-0 rounded-[50px] bg-black p-[10px]" style={{ transform: 'translateZ(0px)' }}>
+      <div className="w-full h-full bg-[#FCF8F0] rounded-[40px] overflow-hidden relative flex flex-col font-sans">
+        <div className="absolute top-0 left-0 w-[150%] h-[150%] bg-gradient-to-br from-white/30 via-white/5 to-transparent -translate-x-1/4 -translate-y-1/4 -rotate-12 pointer-events-none z-30"></div>
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 w-[110px] h-[32px] bg-black rounded-full z-20"></div>
+        <div className="flex justify-between items-center px-6 pt-5 pb-2 text-[12px] font-bold text-black z-10 relative">
+          <span>14:10</span>
+          <div className="flex gap-1.5 items-center">
+            <svg className="w-4 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21L23.6 6C23 5.5 18.5 2 12 2C5.5 2 1 5.5 .4 6L12 21Z"/></svg>
+            <svg className="w-4 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22V1Z"/></svg>
+            <svg className="w-5 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H2v16h18V4zM22 10v4h2v-4h-2z"/></svg>
+          </div>
+        </div>
+        <div className="flex-1 flex flex-col px-5 pt-8 relative z-10">
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex-1 text-center"><span className="text-gray-500 font-medium ml-10 text-lg">{t.app.greeting}</span></div>
+            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm p-1.5 overflow-hidden">
+               <Logo className="w-full h-full" />
+            </div>
+          </div>
+          <h1 className="text-[26px] font-extrabold text-center text-[#1A1A1A] mb-8 px-2 leading-tight">{t.app.question}</h1>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-white rounded-[1.5rem] p-4 flex flex-col items-center justify-center text-center shadow-sm h-40">
+              <div className="w-14 h-14 bg-blue-100/50 rounded-full flex items-center justify-center mb-3 text-3xl">🗺️</div>
+              <h3 className="font-bold text-[#1A1A1A] text-[15px] mb-1">{t.app.plan}</h3>
+              <p className="text-gray-400 text-[11px] leading-tight">{t.app.planDesc}</p>
+            </div>
+            <div className="bg-white rounded-[1.5rem] p-4 flex flex-col items-center justify-center text-center shadow-sm h-40">
+              <div className="w-14 h-14 bg-teal-100/50 rounded-full flex items-center justify-center mb-3 text-3xl">🎧</div>
+              <h3 className="font-bold text-[#1A1A1A] text-[15px] mb-1">{t.app.tours}</h3>
+              <p className="text-gray-400 text-[11px] leading-tight">{t.app.toursDesc}</p>
+            </div>
+            <div className="bg-white rounded-[1.5rem] p-4 flex flex-col items-center justify-center text-center shadow-sm h-40">
+              <div className="w-14 h-14 bg-orange-100/50 rounded-full flex items-center justify-center mb-3 text-3xl">💡</div>
+              <h3 className="font-bold text-[#1A1A1A] text-[15px] mb-1">{t.app.suggestions}</h3>
+              <p className="text-gray-400 text-[11px] leading-tight">{t.app.sugDesc}</p>
+            </div>
+            <div className="bg-white rounded-[1.5rem] p-4 flex flex-col items-center justify-center text-center shadow-sm h-40">
+              <div className="w-14 h-14 bg-purple-100/50 rounded-full flex items-center justify-center mb-3 text-3xl">🎲</div>
+              <h3 className="font-bold text-[#1A1A1A] text-[15px] mb-1">{t.app.adventure}</h3>
+              <p className="text-gray-400 text-[11px] leading-tight">{t.app.advDesc}</p>
+            </div>
+          </div>
+          <div className="mt-auto mb-10 text-center">
+             <p className="text-[10px] font-bold tracking-[0.2em] text-gray-400 mb-1 flex items-center justify-center gap-2 uppercase font-mono">ITINERARLY</p>
+             <p className="text-xs text-gray-500 font-medium">{t.app.footer}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const InteractiveFeatures = ({ t }) => {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const iconMap = [<Map className="text-ocean w-20 h-20" />, <Headphones className="text-turquoise w-20 h-20" />, <Sparkles className="text-coral w-20 h-20" />, <Dices className="text-violet w-20 h-20" />];
+  const colorMap = ['ocean', 'turquoise', 'coral', 'violet'];
+  const activeColor = colorMap[activeIdx];
+  return (
+    <section id="features" className="py-24 px-6 relative z-10 bg-white/30 backdrop-blur-md border-y border-white/40">
+      <LandmarkDecor />
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+        <div className="w-full lg:w-1/2 flex flex-col gap-3">
+          <h2 className="text-4xl lg:text-5xl font-black text-brand-text mb-2 uppercase tracking-tighter leading-tight">{t.features.title}</h2>
+          <p className="text-xl text-gray-500 mb-8 font-medium">{t.features.subtitle}</p>
+          {t.features.modes.map((f, idx) => {
+            const isActive = idx === activeIdx;
+            return (
+              <div key={f.id} onClick={() => setActiveIdx(idx)} className={`cursor-pointer transition-all duration-500 rounded-[2rem] p-6 border-l-8 ${isActive ? `border-${colorMap[idx]} bg-white/80 shadow-2xl scale-[1.02]` : 'border-transparent opacity-40 grayscale hover:opacity-100 hover:grayscale-0'}`}>
+                <h3 className="text-2xl font-bold mb-2 uppercase tracking-wide">{f.title}</h3>
+                {isActive && (
+                  <div className="space-y-3 mt-4">
+                    <p className="text-gray-700 italic border-l-2 border-gray-300 pl-4 py-1">{f.userView}</p>
+                    <p className="text-sm text-gray-600 font-bold uppercase tracking-widest">{t.features.capLabel} {f.capabilities}</p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        <div className="w-full lg:w-1/2 relative h-[500px] flex items-center justify-center">
+           <div className={`absolute w-[400px] h-[400px] rounded-full blur-[100px] opacity-20 bg-${activeColor} transition-colors duration-1000 animate-pulse-slow`}></div>
+           <div className="relative z-10 bg-white/90 backdrop-blur-2xl border border-white w-full max-sm:max-w-[280px] max-w-sm aspect-square rounded-[4rem] shadow-2xl flex flex-col items-center justify-center p-8 transition-transform duration-700 hover:scale-105">
+              <div className={`w-36 h-36 rounded-full bg-${activeColor}/5 flex items-center justify-center mb-8 animate-float`}>{iconMap[activeIdx]}</div>
+              <h4 className={`text-4xl font-black text-${activeColor} uppercase tracking-tighter`}>{t.features.modes[activeIdx].title}</h4>
+           </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Personas = ({ t }) => {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const imageMap = ["https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200", "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=200", "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200"];
+  const colorMap = ["violet", "ocean", "turquoise"];
+  return (
+    <section className="py-32 px-6 relative z-10 overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15vw] font-black text-gray-100 opacity-20 select-none pointer-events-none uppercase">EXPLORERS</div>
+      <div className="max-w-5xl mx-auto text-center relative z-10">
+        <h2 className="text-sm font-bold tracking-[0.3em] text-gray-400 uppercase mb-4 opacity-60">{t.personas.title}</h2>
+        <div className="relative min-h-[300px] flex flex-col items-center justify-center mb-16">
+          <Quote className="absolute -top-10 left-1/2 -translate-x-1/2 w-48 h-48 text-brand-gradientStart opacity-[0.03] z-0" />
+          <p className="text-3xl md:text-5xl font-medium text-brand-text leading-tight mb-12 italic tracking-tight">"{t.personas.list[activeIdx].quote}"</p>
+          <div>
+            <p className="text-2xl font-black text-brand-text uppercase tracking-widest leading-tight">{t.personas.list[activeIdx].name}</p>
+            <span className={`inline-block mt-3 px-6 py-2 rounded-full text-xs font-bold bg-${colorMap[activeIdx]}/10 text-${colorMap[activeIdx]} uppercase tracking-[0.2em]`}>{t.personas.list[activeIdx].tag}</span>
+          </div>
+        </div>
+        <div className="flex items-center justify-center gap-8">
+          {t.personas.list.map((_, idx) => (
+            <button key={idx} onClick={() => setActiveIdx(idx)} className={`relative transition-all duration-500 rounded-full overflow-hidden ${idx === activeIdx ? `w-24 h-24 ring-8 ring-${colorMap[idx]}/10 ring-offset-4 ring-offset-beige shadow-2xl` : 'w-16 h-16 opacity-30 grayscale hover:opacity-100 hover:grayscale-0'}`}>
+              <img src={imageMap[idx]} alt="Avatar" className="w-full h-full object-cover" />
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const FluidStats = ({ t }) => {
+  const textColorMap = ["text-coral", "text-turquoise", "text-ocean", "text-violet"];
+  return (
+    <section id="stats" className="py-24 px-6 bg-white/60 backdrop-blur-xl border-y border-white relative z-10">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-16">
+        <div className="lg:w-1/3 text-center lg:text-left">
+          <h2 className="text-5xl font-black mb-4 text-brand-text uppercase tracking-tighter leading-[0.9]">{t.stats.title}</h2>
+          <div className="w-20 h-2 bg-gradient-to-r from-brand-gradientStart to-brand-gradientEnd mx-auto lg:mx-0 rounded-full"></div>
+        </div>
+        <div className="lg:w-2/3 grid grid-cols-2 md:grid-cols-4 gap-12 max-md:divide-y md:divide-x divide-gray-100">
+          {t.stats.items.map((stat, idx) => (
+            <div key={idx} className="flex flex-col items-center justify-center pt-4 md:pt-0">
+              <span className={`text-5xl md:text-6xl font-black ${textColorMap[idx]} mb-4 transition-transform duration-700`}>{stat.value}</span>
+              <span className="text-xs font-black tracking-[0.2em] uppercase text-brand-text opacity-40 text-center">{stat.label}</span>
+              <span className="text-[10px] text-gray-400 font-bold uppercase mt-1 text-center">{stat.sublabel}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const App = () => {
+  const [lang, setLang] = useState('fr');
+  const [legalModal, setLegalModal] = useState(null);
+  const [highlight, setHighlight] = useState(false);
+  const downloadRef = useRef(null);
+  const t = translations[lang];
+
+  const handleGetApp = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      setHighlight(true);
+      setTimeout(() => setHighlight(false), 2000);
+    }, 400);
+  };
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.innerHTML = tailwindConfig;
+    document.head.appendChild(script);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-beige font-sans text-brand-text selection:bg-brand-gradientStart selection:text-white overflow-x-hidden">
+      <GrainOverlay />
+      {legalModal === 'privacy' && <LegalModal title={t.legal.privacyTitle} content={t.legal.privacyContent} onClose={() => setLegalModal(null)} />}
+      {legalModal === 'terms' && <LegalModal title={t.legal.termsTitle} content={t.legal.termsContent} onClose={() => setLegalModal(null)} />}
+      
+      {/* Navbar */}
+      <nav className="fixed w-full z-50 top-0 px-6 py-4">
+        <div className="max-w-7xl mx-auto bg-white/70 backdrop-blur-md border border-white/50 rounded-full px-6 py-3 flex items-center justify-between shadow-sm">
+          <div className="flex items-center gap-3">
+            <Logo className="w-10 h-10 drop-shadow-sm" />
+            <span className="text-xl font-bold tracking-widest text-brand-text uppercase">Itinerarly</span>
+          </div>
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+            <a href="#features" className="hover:text-brand-text transition-colors font-semibold">{t.nav.features}</a>
+            <a href="#stats" className="hover:text-brand-text transition-colors font-semibold">{t.nav.stats}</a>
+            <div className="flex items-center gap-2 bg-beige-dark/50 px-3 py-1.5 rounded-full text-xs font-bold">
+              <span onClick={() => setLang('fr')} className={`cursor-pointer transition-colors ${lang === 'fr' ? 'text-brand-text' : 'text-gray-400'}`}>FR</span>
+              <span className="text-gray-300">/</span>
+              <span onClick={() => setLang('en')} className={`cursor-pointer transition-colors ${lang === 'en' ? 'text-brand-text' : 'text-gray-400'}`}>EN</span>
+            </div>
+            <button onClick={handleGetApp} className="bg-gradient-to-r from-brand-gradientStart to-brand-gradientEnd text-white px-8 py-2 rounded-full font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 text-sm">
+              {t.nav.getApp}
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <main>
+        {/* Hero Section */}
+        <section className="relative min-h-screen flex items-center justify-center pt-24 pb-12 px-6 overflow-hidden">
+          <LandmarkDecor />
+          <AnimatedPath />
+          <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="text-left relative">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 backdrop-blur-sm border border-white/80 shadow-sm mb-6 animate-float">
+                <Sparkles size={16} className="text-brand-gradientStart" />
+                <span className="text-sm font-medium text-gray-700 uppercase tracking-wider">{t.hero.badge}</span>
+              </div>
+              <h1 className="text-5xl md:text-6xl lg:text-8xl font-black text-brand-text tracking-tight leading-[1] mb-6">
+                {t.hero.title1} <br />
+                {t.hero.title2} <br className="hidden lg:block" />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gradientStart to-brand-gradientEnd">{t.hero.title3}</span>.
+              </h1>
+              <p className="text-lg md:text-xl text-gray-600 max-w-xl leading-relaxed mb-10 font-medium opacity-80">{t.hero.desc}</p>
+              <div ref={downloadRef} className={`relative group transition-all duration-500 ${highlight ? 'animate-highlight' : ''} inline-block`}>
+                <div className={`relative flex items-center gap-4 bg-white/90 backdrop-blur-xl p-4 rounded-3xl border shadow-xl transition-all duration-500 ${highlight ? 'border-brand-gradientStart scale-105' : 'border-white'}`}>
+                  <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" className="h-10 hover:scale-105 transition" /></a>
+                  <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" className="h-10 hover:scale-105 transition" /></a>
+                </div>
+              </div>
+            </div>
+            <div className="relative w-full py-10 lg:py-0 hidden lg:block">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-ocean/10 to-coral/10 rounded-full blur-[120px] animate-pulse-slow z-0"></div>
+              <div className="absolute top-0 right-0 w-20 h-20 bg-white/80 backdrop-blur-xl border border-white rounded-3xl animate-float-delayed flex items-center justify-center text-coral shadow-2xl z-0"><Sparkles size={40} /></div>
+              <div className="absolute bottom-10 left-0 w-16 h-16 bg-white/80 backdrop-blur-xl border border-white rounded-full animate-float flex items-center justify-center text-turquoise shadow-2xl z-0"><Headphones size={30} /></div>
+              <div className="absolute top-[20%] left-[5%] w-16 h-16 bg-white/90 backdrop-blur-xl border border-white rounded-2xl animate-float flex items-center justify-center text-ocean shadow-2xl z-20"><Map size={32} /></div>
+              <div className="absolute bottom-[15%] right-[5%] w-16 h-16 bg-white/90 backdrop-blur-xl border border-white rounded-2xl animate-float-delayed flex items-center justify-center text-violet shadow-2xl z-20"><Dices size={32} /></div>
+              <div className="animate-float relative flex justify-center w-full z-10" style={{ perspective: '2000px' }}>
+                <div style={{ transform: 'rotateY(-25deg) rotateX(15deg) rotateZ(-5deg)', transformStyle: 'preserve-3d' }}>
+                  <IPhone16 t={t} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InteractiveFeatures t={t} />
+        <Personas t={t} />
+        <FluidStats t={t} />
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-beige pt-32 pb-16 px-6 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
+          <div className="flex items-center gap-4 mb-12">
+            <Logo className="w-12 h-12" />
+            <span className="text-3xl font-black tracking-[0.3em] text-brand-text uppercase font-sans">Itinerarly</span>
+          </div>
+          <div className="flex flex-wrap justify-center gap-12 mb-16 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+            <button onClick={() => setLegalModal('privacy')} className="hover:text-brand-text transition-colors cursor-pointer font-bold">{t.footer.privacy}</button>
+            <button onClick={() => setLegalModal('terms')} className="hover:text-brand-text transition-colors cursor-pointer font-bold">{t.footer.terms}</button>
+            <a href="mailto:itinerarly@gmail.com" className="hover:text-brand-text transition-colors font-bold uppercase">{t.footer.contact}</a>
+          </div>
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent mb-12"></div>
+          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
+            Fait avec <span className="text-coral">❤️</span> en France // © {new Date().getFullYear()} Itinerarly. Tous droits réservés.
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default App;
