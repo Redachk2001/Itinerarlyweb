@@ -154,7 +154,7 @@ const Logo = ({ className = "w-10 h-10" }) => (
       <filter id="logo-shadow" x="-20%" y="-20%" width="140%" height="140%">
         <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#000000" floodOpacity="0.15" />
       </filter>
-      <radialGradient id="bg-grad" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
+      <radialGradient id="bg-grad" cx="50%" cy="50%" r="50%" fx="35%" fy="30%">
         <stop offset="0%" stopColor="#F8F6F2" />
         <stop offset="100%" stopColor="#E5DFD6" />
       </radialGradient>
@@ -165,32 +165,29 @@ const Logo = ({ className = "w-10 h-10" }) => (
     <circle cx="50" cy="50" r="43.5" fill="none" stroke="#D1CCC5" strokeWidth="1.5"/>
     <circle cx="50" cy="50" r="42.5" fill="url(#bg-grad)" />
 
-    {/* Background Decorative Dots */}
-    <circle cx="41" cy="62" r="1.8" fill="#AA9E95" />
-    <circle cx="49" cy="55" r="1.5" fill="#AA9E95" />
-    <circle cx="54" cy="60" r="1.8" fill="#AA9E95" />
-    <circle cx="62" cy="64" r="2.2" fill="#AA9E95" />
-
     {/* Shadow Group for Pin & Path */}
     <g filter="url(#logo-shadow)">
-      {/* Dashed Path */}
-      <path 
-        d="M 28 68 Q 38 54, 52 56 T 66 56" 
-        stroke="#3A3840" 
-        strokeWidth="4.5" 
-        strokeLinecap="round" 
-        strokeDasharray="0 8.5"
-      />
+      {/* Shadow Dots (Secondary Trail) */}
+      <circle cx="41" cy="64" r="2.2" fill="#AA9E95" opacity="0.8" />
+      <circle cx="49" cy="60" r="2.0" fill="#AA9E95" opacity="0.8" />
+      <circle cx="57" cy="62" r="2.2" fill="#AA9E95" opacity="0.8" />
+      <circle cx="64" cy="66" r="2.4" fill="#AA9E95" opacity="0.8" />
+
+      {/* Main Trail Dots */}
+      <circle cx="34" cy="62" r="2.2" fill="#3A3840" />
+      <circle cx="41" cy="58" r="2.2" fill="#3A3840" />
+      <circle cx="49" cy="56" r="2.2" fill="#3A3840" />
+      <circle cx="57" cy="56" r="2.2" fill="#3A3840" />
       
       {/* Start Point */}
-      <circle cx="28" cy="68" r="4.5" fill="#3A3840" stroke="rgba(255,255,255,0.8)" strokeWidth="2.5" />
+      <circle cx="28" cy="68" r="4.5" fill="#3A3840" stroke="white" strokeWidth="2.5" />
       
       {/* Location Pin */}
       <g transform="translate(66, 56) scale(1) translate(-14, -38)">
         <path d="M14 0C6.27 0 0 6.27 0 14c0 10.5 14 24 14 24s14-13.5 14-24c0-7.73-6.27-14-14-14z" fill="#3A3840"/>
-        <path d="M14 2C7.37 2 2 7.37 2 14c0 9.2 11 21 12 22.21C14 21 26 9.2 26 14 26 7.37 20.63 2 14 2z" fill="none" stroke="#5E5C64" strokeWidth="1"/>
-        <circle cx="14" cy="13" r="5" fill="white"/>
-        <circle cx="14" cy="31" r="1.5" fill="#242228" opacity="0.6"/>
+        {/* Subtle highlight bezel on the right */}
+        <path d="M14 2 C 20.63 2 26 7.37 26 14 C 26 21 21 28 14 36" fill="none" stroke="#5E5C64" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
+        <circle cx="14" cy="14" r="5.5" fill="white"/>
       </g>
     </g>
   </svg>
