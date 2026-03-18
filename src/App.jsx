@@ -496,7 +496,7 @@ const App = () => {
             <div className="flex items-center gap-6 text-gray-400">
               <a href="https://www.linkedin.com/company/itinerarly/" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gradientStart transition-colors"><Linkedin size={20} /></a>
               <a href="https://www.instagram.com/itinerarly.app/" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gradientStart transition-colors"><Instagram size={20} /></a>
-              <a href="#" className="hover:text-brand-gradientStart transition-colors"><Twitter size={20} /></a>
+              <a href="https://x.com/itinerarly" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gradientStart transition-colors"><Twitter size={20} /></a>
             </div>
           </div>
         </div>
