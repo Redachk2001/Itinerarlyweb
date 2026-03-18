@@ -41,7 +41,7 @@ const translations = {
       footer: "Chaque trajet devient une aventure"
     },
     features: {
-      title: "Les Superpouvoirs de l'App",
+      title: "L'Exploration Réinventée",
       subtitle: "Un moteur d'exploration intelligent qui s'adapte à chaque instant de votre journée.",
       modes: [
         { id: 'planner', title: 'Le Planificateur', userView: '"Générez un itinéraire sur mesure en quelques secondes, parfaitement adapté à vos envies."', capabilities: 'Itinéraires optimisés (marche, voiture, transports). Cartes intégrées.' },
@@ -103,7 +103,7 @@ const translations = {
       footer: "Every journey becomes an adventure"
     },
     features: {
-      title: "The App's Superpowers",
+      title: "Exploration Reinvented",
       subtitle: "An intelligent exploration engine that adapts to every moment of your day.",
       modes: [
         { id: 'planner', title: 'The Planner', userView: '"Generate a custom itinerary in seconds, perfectly tailored to your desires."', capabilities: 'Optimized routes. Integrated maps.' },
