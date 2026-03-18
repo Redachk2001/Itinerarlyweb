@@ -5,7 +5,10 @@ import {
   Sparkles, 
   Dices, 
   X,
-  Quote
+  Quote,
+  Linkedin,
+  Instagram,
+  Twitter
 } from 'lucide-react';
 import { privacyPolicyFR, privacyPolicyEN, termsOfUseFR, termsOfUseEN } from './legalTexts';
 
@@ -465,9 +468,16 @@ const App = () => {
             <a href="mailto:itinerarly@gmail.com" className="hover:text-brand-text transition-colors font-bold uppercase">{t.footer.contact}</a>
           </div>
           <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent mb-12"></div>
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
-            Fait avec <span className="text-coral">❤️</span> en France // © {new Date().getFullYear()} Itinerarly. Tous droits réservés.
-          </p>
+          <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6 px-4">
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em] text-center md:text-left">
+              Fait avec <span className="text-coral">❤️</span> en France // © {new Date().getFullYear()} Itinerarly. Tous droits réservés.
+            </p>
+            <div className="flex items-center gap-6 text-gray-400">
+              <a href="#" className="hover:text-brand-gradientStart transition-colors"><Linkedin size={20} /></a>
+              <a href="#" className="hover:text-brand-gradientStart transition-colors"><Instagram size={20} /></a>
+              <a href="#" className="hover:text-brand-gradientStart transition-colors"><Twitter size={20} /></a>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
