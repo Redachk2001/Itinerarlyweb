@@ -203,9 +203,9 @@ const LegalModal = ({ title, content, onClose }) => {
   }, []);
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/50 backdrop-blur-sm" onClick={onClose}>
-      <div className="bg-beige w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-[2rem] p-8 md:p-12 shadow-2xl relative border border-white" onClick={e => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-6 right-6 p-2 bg-white/80 backdrop-blur rounded-full shadow-sm hover:bg-white transition-colors"><X size={24} className="text-gray-600" /></button>
-        <h2 className="text-3xl lg:text-4xl font-extrabold text-brand-text mb-8 tracking-tight">{title}</h2>
+      <div className="bg-beige w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-[2rem] p-6 md:p-12 shadow-2xl relative border border-white" onClick={e => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-4 right-4 md:top-6 md:right-6 p-2 bg-white/80 backdrop-blur rounded-full shadow-sm hover:bg-white transition-colors"><X size={24} className="text-gray-600" /></button>
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-brand-text mb-6 md:mb-8 tracking-tight">{title}</h2>
         <div className="text-gray-700 whitespace-pre-line leading-relaxed font-medium">{content}</div>
       </div>
     </div>
@@ -294,7 +294,7 @@ const InteractiveFeatures = ({ t }) => {
             );
           })}
         </div>
-        <div className="w-full lg:w-1/2 relative h-[500px] flex items-center justify-center">
+        <div className="w-full lg:w-1/2 relative h-[350px] md:h-[500px] flex items-center justify-center mt-12 lg:mt-0">
            <div className={`absolute w-[400px] h-[400px] rounded-full blur-[100px] opacity-20 bg-${activeColor} transition-colors duration-1000 animate-pulse-slow`}></div>
            <div className="relative z-10 bg-white/90 backdrop-blur-2xl border border-white w-full max-sm:max-w-[280px] max-w-sm aspect-square rounded-[4rem] shadow-2xl flex flex-col items-center justify-center p-8 transition-transform duration-700 hover:scale-105">
               <div className={`w-36 h-36 rounded-full bg-${activeColor}/5 flex items-center justify-center mb-8 animate-float`}>{iconMap[activeIdx]}</div>
@@ -323,7 +323,7 @@ const Personas = ({ t }) => {
             <span className={`inline-block mt-3 px-6 py-2 rounded-full text-xs font-bold bg-${colorMap[activeIdx]}/10 text-${colorMap[activeIdx]} uppercase tracking-[0.2em]`}>{t.personas.list[activeIdx].tag}</span>
           </div>
         </div>
-        <div className="flex items-center justify-center gap-8">
+        <div className="flex items-center justify-center gap-4 md:gap-8">
           {t.personas.list.map((_, idx) => (
             <button key={idx} onClick={() => setActiveIdx(idx)} className={`relative transition-all duration-500 rounded-full overflow-hidden ${idx === activeIdx ? `w-24 h-24 ring-8 ring-${colorMap[idx]}/10 ring-offset-4 ring-offset-beige shadow-2xl` : 'w-16 h-16 opacity-30 grayscale hover:opacity-100 hover:grayscale-0'}`}>
               <img src={imageMap[idx]} alt="Avatar" className="w-full h-full object-cover" />
@@ -344,7 +344,7 @@ const FluidStats = ({ t }) => {
           <h2 className="text-5xl font-black mb-4 text-brand-text uppercase tracking-tighter leading-[0.9]">{t.stats.title}</h2>
           <div className="w-20 h-2 bg-gradient-to-r from-brand-gradientStart to-brand-gradientEnd mx-auto lg:mx-0 rounded-full"></div>
         </div>
-        <div className="lg:w-2/3 grid grid-cols-2 md:grid-cols-4 gap-12 max-md:divide-y md:divide-x divide-gray-100">
+        <div className="lg:w-2/3 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 max-md:divide-y md:divide-x divide-gray-100">
           {t.stats.items.map((stat, idx) => (
             <div key={idx} className="flex flex-col items-center justify-center pt-4 md:pt-0">
               <span className={`text-5xl md:text-6xl font-black ${textColorMap[idx]} mb-4 transition-transform duration-700`}>{stat.value}</span>
@@ -388,15 +388,17 @@ const App = () => {
             <Logo className="w-10 h-10 drop-shadow-sm" />
             <span className="text-xl font-bold tracking-widest text-brand-text uppercase">Itinerarly</span>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-            <a href="#features" className="hover:text-brand-text transition-colors font-semibold">{t.nav.features}</a>
-            <a href="#stats" className="hover:text-brand-text transition-colors font-semibold">{t.nav.stats}</a>
-            <div className="flex items-center gap-2 bg-beige-dark/50 px-3 py-1.5 rounded-full text-xs font-bold">
+          <div className="flex items-center gap-4 md:gap-8 text-sm font-medium text-gray-600 flex-shrink-0">
+            <div className="hidden md:flex gap-8">
+              <a href="#features" className="hover:text-brand-text transition-colors font-semibold">{t.nav.features}</a>
+              <a href="#stats" className="hover:text-brand-text transition-colors font-semibold">{t.nav.stats}</a>
+            </div>
+            <div className="flex items-center gap-1.5 md:gap-2 bg-gray-100 md:bg-beige-dark/50 px-2 lg:px-3 py-1.5 rounded-full text-[10px] lg:text-xs font-bold">
               <span onClick={() => setLang('fr')} className={`cursor-pointer transition-colors ${lang === 'fr' ? 'text-brand-text' : 'text-gray-400'}`}>FR</span>
               <span className="text-gray-300">/</span>
               <span onClick={() => setLang('en')} className={`cursor-pointer transition-colors ${lang === 'en' ? 'text-brand-text' : 'text-gray-400'}`}>EN</span>
             </div>
-            <button onClick={handleGetApp} className="bg-gradient-to-r from-brand-gradientStart to-brand-gradientEnd text-white px-8 py-2 rounded-full font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 text-sm">
+            <button onClick={handleGetApp} className="bg-gradient-to-r from-brand-gradientStart to-brand-gradientEnd text-white px-4 md:px-8 py-2 rounded-full font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 text-xs md:text-sm whitespace-nowrap">
               {t.nav.getApp}
             </button>
           </div>
@@ -427,14 +429,14 @@ const App = () => {
                 </div>
               </div>
             </div>
-            <div className="relative w-full py-10 lg:py-0 hidden lg:block">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-ocean/10 to-coral/10 rounded-full blur-[120px] animate-pulse-slow z-0"></div>
-              <div className="absolute top-0 right-0 w-20 h-20 bg-white/80 backdrop-blur-xl border border-white rounded-3xl animate-float-delayed flex items-center justify-center text-coral shadow-2xl z-0"><Sparkles size={40} /></div>
-              <div className="absolute bottom-10 left-0 w-16 h-16 bg-white/80 backdrop-blur-xl border border-white rounded-full animate-float flex items-center justify-center text-turquoise shadow-2xl z-0"><Headphones size={30} /></div>
-              <div className="absolute top-[20%] left-[5%] w-16 h-16 bg-white/90 backdrop-blur-xl border border-white rounded-2xl animate-float flex items-center justify-center text-ocean shadow-2xl z-20"><Map size={32} /></div>
-              <div className="absolute bottom-[15%] right-[5%] w-16 h-16 bg-white/90 backdrop-blur-xl border border-white rounded-2xl animate-float-delayed flex items-center justify-center text-violet shadow-2xl z-20"><Dices size={32} /></div>
-              <div className="animate-float relative flex justify-center w-full z-10" style={{ perspective: '2000px' }}>
-                <div style={{ transform: 'rotateY(-25deg) rotateX(15deg) rotateZ(-5deg)', transformStyle: 'preserve-3d' }}>
+            <div className="relative w-full py-16 lg:py-0 block mt-8 lg:mt-0">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[500px] w-full aspect-square bg-gradient-to-tr from-ocean/10 to-coral/10 rounded-full blur-[80px] md:blur-[120px] animate-pulse-slow z-0"></div>
+              <div className="absolute -top-4 md:top-0 right-0 md:right-4 w-14 h-14 md:w-20 md:h-20 bg-white/80 backdrop-blur-xl border border-white rounded-2xl md:rounded-3xl animate-float-delayed flex items-center justify-center text-coral shadow-lg md:shadow-2xl z-0"><Sparkles className="w-6 h-6 md:w-10 md:h-10" /></div>
+              <div className="absolute bottom-4 md:bottom-10 left-0 md:-left-4 w-12 h-12 md:w-16 md:h-16 bg-white/80 backdrop-blur-xl border border-white rounded-full animate-float flex items-center justify-center text-turquoise shadow-lg md:shadow-2xl z-0"><Headphones className="w-5 h-5 md:w-8 md:h-8" /></div>
+              <div className="absolute top-[10%] md:top-[20%] left-[2%] md:left-[5%] w-12 h-12 md:w-16 md:h-16 bg-white/90 backdrop-blur-xl border border-white rounded-xl md:rounded-2xl animate-float flex items-center justify-center text-ocean shadow-lg md:shadow-2xl z-20"><Map className="w-6 h-6 md:w-8 md:h-8" /></div>
+              <div className="absolute bottom-[5%] md:bottom-[15%] right-[2%] md:right-[5%] w-12 h-12 md:w-16 md:h-16 bg-white/90 backdrop-blur-xl border border-white rounded-xl md:rounded-2xl animate-float-delayed flex items-center justify-center text-violet shadow-lg md:shadow-2xl z-20"><Dices className="w-6 h-6 md:w-8 md:h-8" /></div>
+              <div className="animate-float relative flex justify-center w-full z-10 scale-[0.85] sm:scale-95 lg:scale-100 origin-center" style={{ perspective: '2000px' }}>
+                <div style={{ transform: 'rotateY(-15deg) rotateX(10deg) rotateZ(-3deg)', transformStyle: 'preserve-3d' }}>
                   <IPhone16 t={t} />
                 </div>
               </div>
@@ -454,7 +456,7 @@ const App = () => {
             <Logo className="w-12 h-12" />
             <span className="text-3xl font-black tracking-[0.3em] text-brand-text uppercase font-sans">Itinerarly</span>
           </div>
-          <div className="flex flex-wrap justify-center gap-12 mb-16 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-12 mb-16 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
             <button onClick={() => setLegalModal('privacy')} className="hover:text-brand-text transition-colors cursor-pointer font-bold">{t.footer.privacy}</button>
             <button onClick={() => setLegalModal('terms')} className="hover:text-brand-text transition-colors cursor-pointer font-bold">{t.footer.terms}</button>
             <a href="mailto:itinerarly@gmail.com" className="hover:text-brand-text transition-colors font-bold uppercase">{t.footer.contact}</a>
