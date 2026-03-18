@@ -148,29 +148,48 @@ const translations = {
 
 const Logo = ({ className = "w-10 h-10" }) => (
   <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Background Circle */}
-    <circle cx="50" cy="50" r="48" fill="#F5F2EB" stroke="#EAE5DB" strokeWidth="1"/>
-    <circle cx="50" cy="50" r="44" fill="#FDFCF9" opacity="0.5"/>
-    
-    {/* Dashed Route Path */}
-    <path 
-      d="M 32 68 C 35 55, 45 50, 55 52" 
-      stroke="#434049" 
-      strokeWidth="5" 
-      strokeLinecap="round" 
-      strokeDasharray="0.1 10"
-    />
-    
-    {/* Start Point */}
-    <circle cx="32" cy="68" r="5" fill="#434049" stroke="#F5F2EB" strokeWidth="2"/>
-    
-    {/* Location Pin */}
-    <g transform="translate(52, 28) scale(1.1)">
+    <defs>
+      <filter id="logo-shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#000000" floodOpacity="0.15" />
+      </filter>
+      <radialGradient id="bg-grad" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
+        <stop offset="0%" stopColor="#F8F6F2" />
+        <stop offset="100%" stopColor="#E5DFD6" />
+      </radialGradient>
+    </defs>
+
+    {/* Bezel / Background */}
+    <circle cx="50" cy="50" r="48" fill="#EAE5DF" stroke="#F1EDE7" strokeWidth="2"/>
+    <circle cx="50" cy="50" r="43.5" fill="none" stroke="#D1CCC5" strokeWidth="1.5"/>
+    <circle cx="50" cy="50" r="42.5" fill="url(#bg-grad)" />
+
+    {/* Background Decorative Dots */}
+    <circle cx="41" cy="62" r="1.8" fill="#AA9E95" />
+    <circle cx="49" cy="55" r="1.5" fill="#AA9E95" />
+    <circle cx="54" cy="60" r="1.8" fill="#AA9E95" />
+    <circle cx="62" cy="64" r="2.2" fill="#AA9E95" />
+
+    {/* Shadow Group for Pin & Path */}
+    <g filter="url(#logo-shadow)">
+      {/* Dashed Path */}
       <path 
-        d="M10 0C4.48 0 0 4.48 0 10C0 17.5 10 28 10 28C10 28 20 17.5 20 10C20 4.48 15.52 0 10 0Z" 
-        fill="#434049"
+        d="M 28 68 Q 38 54, 52 56 T 66 56" 
+        stroke="#3A3840" 
+        strokeWidth="4.5" 
+        strokeLinecap="round" 
+        strokeDasharray="0 8.5"
       />
-      <circle cx="10" cy="10" r="4" fill="white"/>
+      
+      {/* Start Point */}
+      <circle cx="28" cy="68" r="4.5" fill="#3A3840" stroke="rgba(255,255,255,0.8)" strokeWidth="2.5" />
+      
+      {/* Location Pin */}
+      <g transform="translate(66, 56) scale(1) translate(-14, -38)">
+        <path d="M14 0C6.27 0 0 6.27 0 14c0 10.5 14 24 14 24s14-13.5 14-24c0-7.73-6.27-14-14-14z" fill="#3A3840"/>
+        <path d="M14 2C7.37 2 2 7.37 2 14c0 9.2 11 21 12 22.21C14 21 26 9.2 26 14 26 7.37 20.63 2 14 2z" fill="none" stroke="#5E5C64" strokeWidth="1"/>
+        <circle cx="14" cy="13" r="5" fill="white"/>
+        <circle cx="14" cy="31" r="1.5" fill="#242228" opacity="0.6"/>
+      </g>
     </g>
   </svg>
 );
@@ -441,7 +460,7 @@ const App = () => {
               <div className="absolute bottom-4 md:bottom-10 left-0 md:-left-4 w-12 h-12 md:w-16 md:h-16 bg-white/80 backdrop-blur-xl border border-white rounded-full animate-float flex items-center justify-center text-turquoise shadow-lg md:shadow-2xl z-0"><Headphones className="w-5 h-5 md:w-8 md:h-8" /></div>
               <div className="absolute top-[10%] md:top-[20%] left-[2%] md:left-[5%] w-12 h-12 md:w-16 md:h-16 bg-white/90 backdrop-blur-xl border border-white rounded-xl md:rounded-2xl animate-float flex items-center justify-center text-ocean shadow-lg md:shadow-2xl z-20"><Map className="w-6 h-6 md:w-8 md:h-8" /></div>
               <div className="absolute bottom-[5%] md:bottom-[15%] right-[2%] md:right-[5%] w-12 h-12 md:w-16 md:h-16 bg-white/90 backdrop-blur-xl border border-white rounded-xl md:rounded-2xl animate-float-delayed flex items-center justify-center text-violet shadow-lg md:shadow-2xl z-20"><Dices className="w-6 h-6 md:w-8 md:h-8" /></div>
-              <div className="animate-float relative flex justify-center w-full z-10 scale-[0.85] sm:scale-95 lg:scale-110 xl:scale-125 origin-center" style={{ perspective: '2000px' }}>
+              <div className="animate-float relative flex justify-center w-full z-10 scale-[0.85] sm:scale-95 lg:scale-[1.15] xl:scale-[1.35] origin-center" style={{ perspective: '2000px' }}>
                 <div style={{ transform: 'rotateY(-15deg) rotateX(10deg) rotateZ(-3deg)', transformStyle: 'preserve-3d' }}>
                   <IPhone16 t={t} />
                 </div>
