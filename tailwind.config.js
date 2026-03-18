@@ -4,6 +4,12 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    {
+      pattern: /(bg|text|border|ring|shadow|from|to|via)-(ocean|turquoise|coral|violet)/,
+      variants: ['hover', 'group-hover']
+    }
+  ],
   theme: {
     extend: {
       fontFamily: {

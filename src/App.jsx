@@ -282,10 +282,13 @@ const InteractiveFeatures = ({ t }) => {
           {t.features.modes.map((f, idx) => {
             const isActive = idx === activeIdx;
             return (
-              <div key={f.id} onClick={() => setActiveIdx(idx)} className={`cursor-pointer transition-all duration-500 rounded-[2rem] p-6 border-l-8 ${isActive ? `border-${colorMap[idx]} bg-white/80 shadow-2xl scale-[1.02]` : 'border-transparent opacity-40 grayscale hover:opacity-100 hover:grayscale-0'}`}>
-                <h3 className="text-2xl font-bold mb-2 uppercase tracking-wide">{f.title}</h3>
+              <div key={f.id} onClick={() => setActiveIdx(idx)} className={`cursor-pointer transition-all duration-500 rounded-[2rem] p-6 border-l-8 group relative overflow-hidden ${isActive ? `border-${colorMap[idx]} bg-white/90 shadow-xl scale-[1.02]` : `border-transparent bg-white/30 hover:bg-white/60 hover:border-${colorMap[idx]}/40 hover:shadow-md opacity-75 hover:opacity-100`}`}>
+                <div className="flex items-center justify-between relative z-10">
+                  <h3 className={`text-2xl font-bold uppercase tracking-wide transition-colors ${isActive ? 'text-gray-900' : 'text-gray-600 group-hover:text-gray-900'}`}>{f.title}</h3>
+                  {!isActive && <div className={`w-8 h-8 rounded-full flex items-center justify-center bg-${colorMap[idx]}/10 text-${colorMap[idx]} opacity-0 group-hover:opacity-100 transition-all transform translate-x-4 group-hover:translate-x-0 font-black`}>→</div>}
+                </div>
                 {isActive && (
-                  <div className="space-y-3 mt-4">
+                  <div className="space-y-3 mt-4 relative z-10">
                     <p className="text-gray-700 italic border-l-2 border-gray-300 pl-4 py-1">{f.userView}</p>
                     <p className="text-sm text-gray-600 font-bold uppercase tracking-widest">{t.features.capLabel} {f.capabilities}</p>
                   </div>
@@ -296,8 +299,8 @@ const InteractiveFeatures = ({ t }) => {
         </div>
         <div className="w-full lg:w-1/2 relative h-[350px] md:h-[500px] flex items-center justify-center mt-12 lg:mt-0">
            <div className={`absolute w-[400px] h-[400px] rounded-full blur-[100px] opacity-20 bg-${activeColor} transition-colors duration-1000 animate-pulse-slow`}></div>
-           <div className="relative z-10 bg-white/90 backdrop-blur-2xl border border-white w-full max-sm:max-w-[280px] max-w-sm aspect-square rounded-[4rem] shadow-2xl flex flex-col items-center justify-center p-8 transition-transform duration-700 hover:scale-105">
-              <div className={`w-36 h-36 rounded-full bg-${activeColor}/5 flex items-center justify-center mb-8 animate-float`}>{iconMap[activeIdx]}</div>
+           <div className={`relative z-10 border border-white w-full max-sm:max-w-[280px] max-w-sm aspect-square rounded-[4rem] shadow-2xl shadow-${activeColor}/20 flex flex-col items-center justify-center p-8 transition-all duration-700 hover:scale-105 bg-gradient-to-br from-white/90 via-white/80 to-${activeColor}/10 backdrop-blur-2xl`}>
+              <div className={`w-36 h-36 rounded-full bg-${activeColor}/10 flex items-center justify-center mb-8 animate-float shadow-inner text-${activeColor}`}>{iconMap[activeIdx]}</div>
               <h4 className={`text-4xl font-black text-${activeColor} uppercase tracking-tighter`}>{t.features.modes[activeIdx].title}</h4>
            </div>
         </div>
