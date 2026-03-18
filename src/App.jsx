@@ -149,59 +149,7 @@ const translations = {
 // --- Composants de décoration & LOGO INTERNE ---
 
 const Logo = ({ className = "w-10 h-10" }) => (
-  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <radialGradient id="bg-grad" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
-        <stop offset="0%" stopColor="#FAF8F5" />
-        <stop offset="100%" stopColor="#EBE5DA" />
-      </radialGradient>
-      <filter id="logo-shadow" x="-10%" y="-10%" width="120%" height="120%">
-        <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#000000" floodOpacity="0.10"/>
-      </filter>
-    </defs>
-
-    {/* 1. Bezel */}
-    <circle cx="50" cy="50" r="48" fill="#F0EBE1" />
-    <circle cx="50" cy="50" r="47" stroke="#FAF8F5" strokeWidth="1.5" />
-    <circle cx="50" cy="50" r="44" stroke="#DFD8CE" strokeWidth="1" />
-    
-    {/* 2. Main Background */}
-    <circle cx="50" cy="50" r="43.5" fill="url(#bg-grad)" />
-
-    <g filter="url(#logo-shadow)">
-      {/* 3. Brown Background Dots */}
-      <circle cx="40.5" cy="62" r="1.8" fill="#A49A8F" />
-      <circle cx="53.5" cy="60" r="1.8" fill="#A49A8F" />
-      <circle cx="61.5" cy="63" r="1.8" fill="#A49A8F" />
-
-      {/* 4. Main Dark Path Dots */}
-      <circle cx="33.5" cy="60.5" r="2.2" fill="#36333B" />
-      <circle cx="40.5" cy="56.5" r="2.2" fill="#36333B" />
-      <circle cx="48.5" cy="55.5" r="2.2" fill="#36333B" />
-      <circle cx="57.0" cy="56.5" r="2.2" fill="#36333B" />
-      <circle cx="65.0" cy="56.5" r="2.2" fill="#36333B" /> {/* Pin base */}
-
-      {/* 5. Start Point */}
-      <circle cx="27" cy="67" r="5.5" fill="#EAE5DC" /> {/* Outer faint ring */}
-      <circle cx="27" cy="67" r="4.2" fill="#FFFFFF" /> {/* White ring */}
-      <circle cx="27" cy="67" r="2.8" fill="#36333B" /> {/* Dark center */}
-
-      {/* 6. Location Pin */}
-      <g transform="translate(65, 56.5) translate(-14, -38)">
-        {/* Main Pin Body */}
-        <path d="M14 0C6.27 0 0 6.27 0 14c0 10.5 14 24 14 24s14-13.5 14-24c0-7.73-6.27-14-14-14z" fill="#36333B"/>
-        
-        {/* Right Side Bezel/Highlight Overlay */}
-        <path d="M14 0 C 21.73 0 28 6.27 28 14 C 28 24.5 14 38 14 38 C 14 38 25 24.5 25 14 C 25 7.9 20.1 3 14 3 Z" fill="#4B4751" opacity="0.6" />
-        
-        {/* Subtle edge stroke */}
-        <path d="M14 2C20.6 2 26 7.4 26 14c0 7-5 14-12 22" fill="none" stroke="#5E5C64" strokeWidth="0.8" opacity="0.5"/>
-
-        {/* White Inner Circle */}
-        <circle cx="14" cy="13.5" r="5" fill="#FFFFFF"/>
-      </g>
-    </g>
-  </svg>
+  <img src="/logo.svg" alt="Itinerarly Logo" className={className} />
 );
 
 const GrainOverlay = () => (
