@@ -272,7 +272,7 @@ const InteractiveFeatures = ({ t }) => {
   const colorMap = ['ocean', 'turquoise', 'coral', 'violet'];
   const activeColor = colorMap[activeIdx];
   return (
-    <section id="features" className="py-24 px-6 relative z-10 bg-white/30 backdrop-blur-md border-y border-white/40">
+    <section id="features" className="py-32 md:py-48 px-6 relative z-10 bg-white/30 backdrop-blur-md border-y border-white/40">
       <LandmarkDecor />
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
         <div className="w-full lg:w-1/2 flex flex-col gap-3">
@@ -310,7 +310,7 @@ const Personas = ({ t }) => {
   const imageMap = ["https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200", "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=200", "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200"];
   const colorMap = ["violet", "ocean", "turquoise"];
   return (
-    <section className="py-32 px-6 relative z-10 overflow-hidden">
+    <section className="py-40 md:py-56 px-6 relative z-10 overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15vw] font-black text-gray-100 opacity-20 select-none pointer-events-none uppercase">EXPLORERS</div>
       <div className="max-w-5xl mx-auto text-center relative z-10">
         <h2 className="text-sm font-bold tracking-[0.3em] text-gray-400 uppercase mb-4 opacity-60">{t.personas.title}</h2>
@@ -337,7 +337,7 @@ const Personas = ({ t }) => {
 const FluidStats = ({ t }) => {
   const textColorMap = ["text-coral", "text-turquoise", "text-ocean", "text-violet"];
   return (
-    <section id="stats" className="py-24 px-6 bg-white/60 backdrop-blur-xl border-y border-white relative z-10">
+    <section id="stats" className="py-32 md:py-48 px-6 bg-white/60 backdrop-blur-xl border-y border-white relative z-10">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-16">
         <div className="lg:w-1/3 text-center lg:text-left">
           <h2 className="text-5xl font-black mb-4 text-brand-text uppercase tracking-tighter leading-[0.9]">{t.stats.title}</h2>
@@ -404,7 +404,7 @@ const App = () => {
 
       <main>
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center pt-24 pb-12 px-6 overflow-hidden">
+        <section className="relative min-h-[110vh] flex items-center justify-center pt-32 pb-24 px-6 overflow-hidden">
           <LandmarkDecor />
           <AnimatedPath />
           <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -447,7 +447,7 @@ const App = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-beige pt-32 pb-16 px-6 relative overflow-hidden">
+      <footer className="bg-beige pt-48 pb-24 px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
           <div className="flex items-center gap-4 mb-12">
             <Logo className="w-12 h-12" />
