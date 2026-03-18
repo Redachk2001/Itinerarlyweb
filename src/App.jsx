@@ -57,7 +57,8 @@ const translations = {
       list: [
         { name: "Sophie", role: "L'Aventurière Spontanée", quote: "Je déteste tout planifier. Avec le Mode Aventure, Itinerarly m'a fait découvrir un café historique caché.", tag: "Utilise le Mode Aventure" },
         { name: "Marc & Léa", role: "Les Planificateurs", quote: "Gérer un voyage à deux n'a jamais été aussi simple. L'IA a optimisé notre trajet pour tout voir.", tag: "Utilisent Le Planificateur" },
-        { name: "Thomas", role: "Le Passionné d'Histoire", quote: "Les guides audio interactifs sont incroyables. J'ai eu l'impression de me promener avec un historien.", tag: "Utilise les Visites Guidées" }
+        { name: "Thomas", role: "Le Passionné d'Histoire", quote: "Les guides audio interactifs sont incroyables. J'ai eu l'impression de me promener avec un historien.", tag: "Utilise les Visites Guidées" },
+        { name: "Elena", role: "La Chasseuse de Pépites", quote: "Les Suggestions Intelligentes m'ont permis de trouver des spots incroyables en quelques secondes.", tag: "Utilise les Suggestions Intelligentes" }
       ]
     },
     stats: {
@@ -118,7 +119,8 @@ const translations = {
       list: [
         { name: "Sophie", role: "The Spontaneous Adventurer", quote: "I hate planning everything. With Adventure Mode, Itinerarly helped me discover a hidden gem.", tag: "Uses Adventure Mode" },
         { name: "Marc & Léa", role: "The Planners", quote: "Managing a trip for two has never been easier. The AI optimized our route.", tag: "Uses The Planner" },
-        { name: "Thomas", role: "The History Buff", quote: "The interactive audio guides are incredible. I felt like I was with a historian.", tag: "Uses Guided Tours" }
+        { name: "Thomas", role: "The History Buff", quote: "The interactive audio guides are incredible. I felt like I was with a historian.", tag: "Uses Guided Tours" },
+        { name: "Elena", role: "The Hidden Gem Hunter", quote: "Smart Suggestions helped me find incredible spots instantly without any research.", tag: "Uses Smart Suggestions" }
       ]
     },
     stats: {
@@ -333,8 +335,8 @@ const InteractiveFeatures = ({ t }) => {
 
 const Personas = ({ t }) => {
   const [activeIdx, setActiveIdx] = useState(0);
-  const imageMap = ["https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200", "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=200", "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200"];
-  const colorMap = ["violet", "ocean", "turquoise"];
+  const imageMap = ["https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200", "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=200", "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200", "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200"];
+  const colorMap = ["violet", "ocean", "turquoise", "coral"];
   return (
     <section className="py-32 px-6 relative z-10 overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15vw] font-black text-gray-100 opacity-20 select-none pointer-events-none uppercase">EXPLORERS</div>
